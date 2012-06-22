@@ -4,6 +4,11 @@
   "keywords": ["cube", "cubist", "graphite"],
   "version": "0.0.0",
   "author": "Chris Faulkner <thefaulkner@gmail.com>",
+  "homepage": "https://github.com/faulkner/cubist",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/faulkner/cubist.git"
+  },
   "dependencies": {
     "coffee-script": "1.3.3",
     "express": "3.0.0alpha4",
