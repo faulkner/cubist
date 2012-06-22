@@ -1,0 +1,40 @@
+extends layout
+block content
+  .container-fluid
+    .row-fluid
+      .span3
+        p
+        form.well(data-context='cube')
+          legend cube
+            a.btn.btn-mini.create-chart.pull-right
+              i.icon-plus
+            a.btn.btn-mini.pull-right(href="https://github.com/square/cube/wiki/Queries", target="_blank")
+              i.icon-info-sign
+          input.span12.expression#cube_expression(type="text", name="cube_expression", data-provide="typeahead", autocomplete="off", placeholder="cube expression")
+
+        form.well(data-context='graphite')
+          legend graphite
+            a.btn.btn-mini.create-chart.pull-right
+              i.icon-plus
+            a.btn.btn-mini.pull-right(href="http://graphite.readthedocs.org/en/0.9.10/functions.html", target="_blank")
+              i.icon-info-sign
+          input.span12.expression#graphite_expression(type="text", name="graphite_expression", data-provide="typeahead", autocomplete="off", placeholder="graphite expression")
+
+        form.well
+          legend random
+            a.btn.btn-mini.pull-right#create-random
+              i.icon-plus
+
+      .span9
+        #charts
+
+  script(type='text/html', id='chart')
+    .chart
+      .axis
+      .horizon
+      .chart-actions
+        a.btn.btn-mini.close-btn
+          i.icon-trash
+
+block footer
+  != js('app')
