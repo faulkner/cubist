@@ -31,9 +31,17 @@ block content
         #charts
 
   script(type='text/html', id='chart')
-    .chart
+    .chart(draggable="true")
       .axis
       .horizon
+      .chart-actions
+        a.btn.btn-mini.close-btn
+          i.icon-trash
+
+  script(type='text/html', id='comp_chart')
+    .chart
+      .axis
+      .comparison
       .chart-actions
         a.btn.btn-mini.close-btn
           i.icon-trash

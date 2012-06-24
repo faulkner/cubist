@@ -4,7 +4,12 @@ Cubist is a Cubism graphing sandbox.
 
 Enter Cube or Graphite expressions, get charts.
 
-Chart settings are chucked in local storage for later use.
+Charts are chucked in local storage for later use.
+
+## Features
+
+- server preferences and past expressions saved to local storage
+- comparison charts can be created by dragging one chart onto another ([screenshot](http://faulkner.io/t/screen2012-06-24at2.17.18AM.png))
 
 ## To install
 
@@ -31,6 +36,5 @@ $ export PORT=1234; cubist
 - live editing for existing charts
 - accept chart settings from query params
 - kill data polling when charts are removed
-- support for comparison charts
 - UI for removing old expressions
 - change typeahead into an autocomplete based on functions and metrics available

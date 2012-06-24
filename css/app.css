@@ -1,8 +1,12 @@
-.horizon {
+.horizon, .comparison {
   display:inline-block;
 }
 
 .chart-actions {
   vertical-align:top;
   display:inline-block;
+}
+
+.title {
+  display:block;
 }

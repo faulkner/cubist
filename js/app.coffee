@@ -25,35 +25,59 @@ class @Store
     graphite: ['carbon.agents.*.avgUpdateTime']
   charts: []
 
+# chart data sources
+@chart_data = []
+
 @context = cubism.context()
   .serverDelay(0)
   .clientDelay(0)
   .step(config.chart.step)
   .size(config.chart.size)
 
+chart_container = (charts, template, name='#charts') ->
+  data_id = (chart_data.push charts) - 1
+  container_id = _.uniqueId 'el'
+  container = $($(template).html())
+    .attr('id', container_id)
+    .data('chart', config.charts.length-1)
+    .data('data', data_id)
+  $(name).append(container)
+  container
+
 @add_chart = (chart, name='#charts') ->
   if chart.type == 'random'
     data = random 'random source #'+Math.floor(Math.random()*10000)
   else
     data = context[chart.type](chart.dsn).metric chart.expression
-  container_id = _.uniqueId 'el'
-  container = $($('#chart').html())
-    .attr('id', container_id)
-    .data('chart', config.charts.length-1)
-  $(name).append(container)
 
-  d3.select('#' + container_id).call (div) ->
+  container = chart_container data, '#chart'
+
+  d3.select('#' + container.attr('id')).call (div) ->
     div.select('.axis').call(context.axis().orient("top"))
-    div.datum(data)
     div.select('.horizon')
+    div.datum(data)
       .call(context.horizon()
         .height(config.chart.height)
         .extent(config.chart.extent)
         .colors(config.chart.colors))
-    div.select('.rule').call(context.rule())
 
-  # BREAK YOSELF
-  $('.title', container).prepend('<div>')
+  container.draggable revert: true
+  container.droppable
+    drop: (event, ui) ->
+      flash '<strong>Boom!</strong>  A comparison chart is born.', 'info'
+      primary = chart_data[$(@).data('data')]
+      secondary = chart_data[$(ui.draggable).data('data')]
+      add_comparison_chart primary, secondary
+
+@add_comparison_chart = (primary, secondary, name='#charts') ->
+  container = chart_container [primary, secondary], '#comp_chart'
+
+  d3.select('#' + container.attr('id')).call (div) ->
+    div.select('.axis').call(context.axis().orient("top"))
+    div.select('.comparison')
+      .datum([primary, secondary])
+      .call(context.comparison()
+        .height(config.chart.height))
 
 $('.create-chart').on 'click', (e) ->
   form = $(e.target).parents('form')
@@ -95,6 +119,3 @@ init_form = (name) ->
 init_form form for form in ['cube', 'graphite']
 
 add_chart c for c in config.charts
-
-context.on "focus", (i, e) ->
-  d3.selectAll(".value").style "right", (if not i? then null else context.size() - i + "px")

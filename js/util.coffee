@@ -1,9 +1,15 @@
-@flash = (msg) ->
+@flash = (msg, type='error') ->
   # TODO: jadify!
-  $('.container-fluid:first').prepend('<div class="alert fade in">
+  $('.container-fluid:first').prepend('<div class="alert alert-'+type+' fade in out">
       <button type="button" class="close" data-dismiss="alert">×</button>
-      <strong>Oh shiii..</strong> '+msg+'
+      '+msg+'
     </div>')
+
+  # auto-remove non-errors
+  if type='info'
+    window.setTimeout () ->
+      $('.alert-info').alert('close')
+    , 4000
 
 # pulled from Cubism demo.  Tweaked to make horrible assumptions about there being a global @context.
 @random = (name) ->
