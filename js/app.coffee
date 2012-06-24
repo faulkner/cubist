@@ -12,7 +12,7 @@ class @Store
 @config = new Store 'config',
   chart:
     size: 600
-    step: 1e4
+    step: 6e4
     height: 100
     colors: ["#08519c","#3182bd","#6baed6","#bdd7e7","#bae4b3","#74c476","#31a354","#006d2c"]
     extent: null
