@@ -18,12 +18,15 @@ class @Store
     extent: null
   cube:
     dsn: 'http://localhost:1081'
+    expressions: ['max(collectd(load.shortterm))']
   graphite:
     dsn: 'http://localhost:8083'
-  expressions:
-    cube: ['max(collectd(load.shortterm))']
-    graphite: ['carbon.agents.*.avgUpdateTime']
+    expressions: ['carbon.agents.*.avgUpdateTime']
   charts: []
+
+# check query string for server preferences
+config.cube.dsn = cubism.option('cube.dsn', config.cube.dsn)
+config.graphite.dsn = cubism.option('graphite.dsn', config.graphite.dsn)
 
 # chart data sources
 @chart_data = []
@@ -83,11 +86,11 @@ $('.create-chart').on 'click', (e) ->
   form = $(e.target).parents('form')
   [type, exp] = [form.data('context'), $('.expression', form).val()]
   if !exp
-    flash 'you need to enter a valid expression first'
+    return flash 'you need to enter a valid expression first'
 
   # store the expression for typeahead
-  if config.expressions[type].indexOf(exp) == -1
-    config.expressions[type].push(exp)
+  if config[type].expressions.indexOf(exp) == -1
+    config[type].expressions.push(exp)
 
   dsn = config[type].dsn = $('.dsn', form).val()
   chart =
@@ -112,9 +115,24 @@ d3.select('#create-random').on 'click', () ->
   config.save()
   add_chart chart
 
+chart_exists = (chart) ->
+  for c in config.charts
+    if c['type'] == chart['type'] and
+       c['dsn'] == chart['dsn'] and
+       c['expression'] == chart['expression']
+      return true
+  false
+
 init_form = (name) ->
-  $("##{name}_expression").typeahead source: config.expressions[name]
+  $("##{name}_expression").typeahead source: config[name].expressions
   $("##{name}_dsn").val config[name].dsn
+
+  # did we get new expressions in the query string?  Load them!
+  if cubism.option(name+'.expression')
+    chart = type: name, expression: cubism.option(name+'.expression'), dsn: cubism.option(name+'.dsn', config[name].dsn)
+    if not chart_exists chart
+      config.charts.push chart
+      config.save()
 
 init_form form for form in ['cube', 'graphite']
 

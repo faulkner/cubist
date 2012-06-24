@@ -34,7 +34,6 @@ $ export PORT=1234; cubist
 - use Backbone or other framework to clean up JS
 - add support for managing lists of servers
 - live editing for existing charts
-- accept chart settings from query params
 - kill data polling when charts are removed
 - UI for removing old expressions
 - change typeahead into an autocomplete based on functions and metrics available
