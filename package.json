@@ -2,7 +2,7 @@
   "name": "cubist",
   "description": "Cubism graph composer",
   "keywords": ["cube", "cubist", "graphite"],
-  "version": "0.0.0",
+  "version": "0.0.1",
   "author": "Chris Faulkner <thefaulkner@gmail.com>",
   "homepage": "https://github.com/faulkner/cubist",
   "repository": {

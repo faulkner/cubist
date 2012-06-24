@@ -55,7 +55,7 @@ chart_container = (charts, template, name='#charts') ->
   d3.select('#' + container.attr('id')).call (div) ->
     div.select('.axis').call(context.axis().orient("top"))
     div.select('.horizon')
-    div.datum(data)
+      .datum(data)
       .call(context.horizon()
         .height(config.chart.height)
         .extent(config.chart.extent)
