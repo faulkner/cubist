@@ -11,6 +11,7 @@ block content
             a.btn.btn-mini.pull-right(href="https://github.com/square/cube/wiki/Queries", target="_blank")
               i.icon-info-sign
           input.span12.expression#cube_expression(type="text", name="cube_expression", data-provide="typeahead", autocomplete="off", placeholder="cube expression")
+          input.span12.dsn#cube_dsn(type="text", name="cube_dsn", placeholder="cube dsn")
 
         form.well(data-context='graphite')
           legend graphite
@@ -19,6 +20,7 @@ block content
             a.btn.btn-mini.pull-right(href="http://graphite.readthedocs.org/en/0.9.10/functions.html", target="_blank")
               i.icon-info-sign
           input.span12.expression#graphite_expression(type="text", name="graphite_expression", data-provide="typeahead", autocomplete="off", placeholder="graphite expression")
+          input.span12.dsn#graphite_dsn(type="text", name="graphite_dsn", placeholder="graphite dsn")
 
         form.well
           legend random

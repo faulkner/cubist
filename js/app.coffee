@@ -65,10 +65,11 @@ $('.create-chart').on 'click', (e) ->
   if config.expressions[type].indexOf(exp) == -1
     config.expressions[type].push(exp)
 
+  dsn = config[type].dsn = $('.dsn', form).val()
   chart =
     expression: exp
     type: type
-    dsn: config[type].dsn # TODO: allow this to be set by user
+    dsn: dsn
 
   config.charts.push chart
   config.save()
@@ -87,8 +88,11 @@ d3.select('#create-random').on 'click', () ->
   config.save()
   add_chart chart
 
-$('#cube_expression').typeahead source: config.expressions.cube
-$('#graphite_expression').typeahead source: config.expressions.graphite
+init_form = (name) ->
+  $("##{name}_expression").typeahead source: config.expressions[name]
+  $("##{name}_dsn").val config[name].dsn
+
+init_form form for form in ['cube', 'graphite']
 
 add_chart c for c in config.charts
 
