@@ -1,3 +1,0 @@
-[submodule "js/store"]
-	path = js/store
-	url = https://github.com/marcuswestin/store.js.git
