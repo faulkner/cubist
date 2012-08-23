@@ -1,3 +1,4 @@
+[![build status](https://secure.travis-ci.org/faulkner/cubist.png)](http://travis-ci.org/faulkner/cubist)
 # Cubist
 
 Cubist is a Cubism graphing sandbox.
